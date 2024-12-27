@@ -10,7 +10,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/auth/me', {
+        const response = await fetch('https://pizzeriamammamia.onrender.com/api/auth/me', {  // URL actualizada a la de Render
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!response.ok) throw new Error('Error al obtener el perfil del usuario.');

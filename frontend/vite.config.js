@@ -1,8 +1,7 @@
 import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  base: '/Pizzeriamammamia/', // Nombre exacto del repositorio
-  build: {
-    outDir: 'dist', // Carpeta donde se generará la compilación
-  },
+  plugins: [react()],
+  base: './', 
 });

@@ -1,34 +1,36 @@
-import './slider.css'
 import Carousel from 'react-bootstrap/Carousel';
-import ExampleCarouselImage from 'components/ExampleCarouselImage';
+import './slider.css'
 
-export const Slider=()=> {
+export function Slider() {
   return (
+    <>
+    <div className='container'>
     <Carousel>
-      <Carousel.Item>
-        <ExampleCarouselImage text="First slide" />
+      <Carousel.Item className="slider-item">
+        <img
+          src="/imagen1.jpeg"
+          alt="First slide"
+          style={{ width: '100%', height: 'auto' }} // Ajusta el tamaño según necesites
+        />
         <Carousel.Caption>
           <h3>First slide label</h3>
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+          <p>Descripción de la primera imagen.</p>
         </Carousel.Caption>
       </Carousel.Item>
-      <Carousel.Item>
-        <ExampleCarouselImage text="Second slide" />
+      <Carousel.Item className="slider-item">
+        <img
+          src="/imagen1.jpeg"
+          alt="Second slide"
+          style={{ width: '100%', height: 'auto' }} // Ajusta el tamaño según necesites
+        />
         <Carousel.Caption>
           <h3>Second slide label</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <ExampleCarouselImage text="Third slide" />
-        <Carousel.Caption>
-          <h3>Third slide label</h3>
-          <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-          </p>
+          <p>Descripción de la segunda imagen.</p>
         </Carousel.Caption>
       </Carousel.Item>
     </Carousel>
+    </div>
+    </>
   );
 }
 

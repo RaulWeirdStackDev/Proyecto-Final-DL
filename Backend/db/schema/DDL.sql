@@ -22,6 +22,10 @@ CREATE TABLE usuario (
     FOREIGN KEY (id_rol) REFERENCES rol(id_rol)
 );
 
+/*
+AGREGAMOS UN COMENTARIO PARA PRUEBA DE GIT
+*/
+
 
 CREATE TABLE categoria (
     id_categoria SERIAL PRIMARY KEY,

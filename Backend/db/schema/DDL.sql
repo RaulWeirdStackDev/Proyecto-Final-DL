@@ -6,15 +6,13 @@ CREATE TABLE rol (
     descripcion VARCHAR(50) UNIQUE NOT NULL,
     estado INT DEFAULT 1 NOT NULL
 );
-INSERT INTO rol (descripcion) 
-VALUES 
-        ('Administrador'),
-        ('Estandar') ;
 
 CREATE TABLE usuario (
     id_usuario SERIAL PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     apellido VARCHAR(100) NOT NULL,
+    rut     VARCHAR(10) NOT NULL,
+    img_perfil     VARCHAR(MAX),
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -22,14 +20,22 @@ CREATE TABLE usuario (
     FOREIGN KEY (id_rol) REFERENCES rol(id_rol)
 );
 
-/*
-ACORTAR EL CODIGO
-*/
+CREATE TABLE direccion(
+    id_direccion SERIAL PRIMARY KEY,
+    id_usuario INT NOT NULL, 
+    direccion VARCHAR(100) NOT NULL,
+    numero INT NOT NULL,
+    anexo   VARCHAR(100),
+    comuna   VARCHAR(100),
+    region   VARCHAR(100),
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+);
 
 
 CREATE TABLE categoria (
     id_categoria SERIAL PRIMARY KEY,
-    nombre_categoria VARCHAR(100) UNIQUE NOT NULL
+    descripcion VARCHAR(100) UNIQUE NOT NULL,
+    estado INT DEFAULT 1 NOT NULL
 );
 
 CREATE TABLE producto (
@@ -53,3 +59,54 @@ CREATE TABLE inventario(
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_producto) REFERENCES producto(id_producto)
 );
+
+CREATE TABLE venta(
+    id_venta SERIAL PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    descripcion VARCHAR(100),
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+);
+
+CREATE TABLE venta_detalle(
+    id_venta_detalle SERIAL PRIMARY KEY,
+    id_venta INT NOT NULL,
+    id_producto INT NOT NULL,
+    cantidad INT NOT NULL,
+    precio_venta INT NOT NULL,
+    descuento INT NOT NULL,
+    precio_final INT NOT NULL,
+    FOREIGN KEY (id_venta) REFERENCES venta(id_venta),
+    FOREIGN KEY (id_producto) REFERENCES producto(id_producto)
+);
+
+
+INSERT INTO 
+    rol (descripcion) 
+VALUES 
+    ('Administrador'),
+    ('Estandar') ;
+
+INSERT INTO 
+    categoria (descripcion)
+VALUES
+    ('Video Juegos'),
+    ('Cartas Magic'),
+    ('Peluches');
+
+
+INSERT INTO 
+    usuario (nombre, apellido, email, password)
+VALUES  
+    ('juan', 'perez', 'admin@admin.com', '123456');
+
+UPDATE usuario
+SET id_rol = 1
+WHERE id_usuario = 1
+
+SELECT 
+    u.*,
+    r.descripcion
+FROM    
+    usuario as u 
+    inner join rol as r ON u.id_rol = r.id_rol

@@ -3,55 +3,42 @@ import { Link } from 'react-router-dom';
 import { CartContext } from '../../context/CartContext';
 import { UserContext } from '../../context/UserContext'; 
 import './Navbar.css';
+import logoDrixel from '../../assets/images/LOGO DRIXELSTORE 2025 gd.png';
+import userblack from '../../assets/images/iconblack.png';
 
 const Navbar = () => {
-  const { total } = useContext(CartContext); // Traigo el total desde CartContext.
-  const { token, logout } = useContext(UserContext); // Obtengo el token y el método logout desde UserContext.
+  const { total } = useContext(CartContext);
+  const { token, logout } = useContext(UserContext);
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div className="container-fluid">
-        <span className="navbar-title d-none d-lg-block">Pizzería Mamma Mía!</span>
-        <button
-          className="navbar-toggler mb-2 mt-2"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <Link to="/" className="nav-link">🍕 Home</Link>
-            </li>
-            {token ? (
-              <>
-                <li className="nav-item">
-                  <Link to="/profile" className="nav-link">⚙️ Profile</Link>
-                </li>
-                <li className="nav-item">
-                  <button onClick={logout} className="nav-link btn btn-link">🔒 Logout</button>
-                </li>
-              </>
-            ) : (
-              <>
-                <li className="nav-item">
-                  <Link to="/login" className="nav-link">🔐 Login</Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/register" className="nav-link">🔏 Register</Link>
-                </li>
-              </>
-            )}
-          </ul>
-        </div>
-        <Link to="/cart" className="total-button nav-link">
-          🛒 Total: ${total.toLocaleString()}
+    <nav className="navbar navbar-expand-lg custom-navbar">
+      <div className="container-fluid justify-content-center">
+
+        {/* Imagen centrada que lleva a Home */}
+        <Link to="/" className="navbar-home-logo mx-auto">
+          <img src={logoDrixel} alt="Drixel Store Logo" className="navbar-logo" />
         </Link>
+
+        {/* Contenedor derecho: login/cart/profile/logout */}
+        <div className="d-flex align-items-center ms-auto">
+          {token ? (
+            <>
+              <Link to="/profile" className="icon-button">
+                <img src="/icons/profile.png" alt="Profile" className="icon-img" />
+              </Link>
+              <button onClick={logout} className="icon-button btn btn-link">
+                <img src="/icons/logout.png" alt="Logout" className="icon-img" />
+              </button>
+            </>
+          ) : (
+            <Link to="/login" className="icon-button">
+              <img src={userblack} alt="Login" className="icon-img" />
+            </Link>
+          )}
+          <Link to="/cart" className="total-button nav-link">
+            🛒 ${total.toLocaleString()}&nbsp;
+          </Link>
+        </div>
       </div>
     </nav>
   );

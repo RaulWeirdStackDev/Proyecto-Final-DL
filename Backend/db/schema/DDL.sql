@@ -12,11 +12,12 @@ CREATE TABLE usuario (
     nombre VARCHAR(100) NOT NULL,
     apellido VARCHAR(100) NOT NULL,
     rut     VARCHAR(10) NOT NULL,
-    img_perfil     VARCHAR(MAX),
+    img     VARCHAR(MAX),
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     id_rol INT NOT NULL DEFAULT 2,
+    estado INT DEFAULT 1 NOT NULL,
     FOREIGN KEY (id_rol) REFERENCES rol(id_rol)
 );
 
@@ -24,13 +25,24 @@ CREATE TABLE direccion(
     id_direccion SERIAL PRIMARY KEY,
     id_usuario INT NOT NULL, 
     direccion VARCHAR(100) NOT NULL,
-    numero INT NOT NULL,
+    numero INT,
     anexo   VARCHAR(100),
-    comuna   VARCHAR(100),
-    region   VARCHAR(100),
+    id_region INT NOT NULL, 
+    id_comuna INT NOT NULL, 
     FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+    FOREIGN KEY (id_region) REFERENCES region(id_region)
+    FOREIGN KEY (id_comuna) REFERENCES comuna(id_comuna)
 );
 
+CREATE TABLE region(
+    id_direccion SERIAL PRIMARY KEY,
+    descripcion VARCHAR(50) UNIQUE NOT NULL
+)
+
+CREATE TABLE comuna(
+    id_comuna SERIAL PRIMARY KEY,
+    descripcion VARCHAR(50) UNIQUE NOT NULL
+)
 
 CREATE TABLE categoria (
     id_categoria SERIAL PRIMARY KEY,
@@ -43,6 +55,12 @@ CREATE TABLE producto (
     id_categoria INT NOT NULL, 
     nombre VARCHAR(150) NOT NULL,
     descripcion TEXT,
+    idioma VARCHAR(50) NOT NULL,
+    rareza VARCHAR(50) NOT NULL,
+    edicion VARCHAR(50) NOT NULL,
+    tipo VARCHAR(50) NOT NULL,
+    color VARCHAR(50) NOT NULL,
+    foil BOOLEAN NOT NULL,
     precio_venta NUMERIC(10, 0) NOT NULL,
     descuento NUMERIC(10, 0) NOT NULL DEFAULT 0,
     url VARCHAR(150) NOT NULL,

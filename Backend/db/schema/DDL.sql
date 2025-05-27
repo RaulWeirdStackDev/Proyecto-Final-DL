@@ -78,6 +78,14 @@ CREATE TABLE inventario(
     FOREIGN KEY (id_producto) REFERENCES producto(id_producto)
 );
 
+CREATE TABLE usuario_producto(
+    id_usuario_producto SERIAL PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    id_producto INT NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
+    FOREIGN KEY (id_producto) REFERENCES producto(id_producto)
+);
+
 CREATE TABLE venta(
     id_venta SERIAL PRIMARY KEY,
     id_usuario INT NOT NULL,
